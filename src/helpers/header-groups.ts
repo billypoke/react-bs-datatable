@@ -13,50 +13,62 @@ export interface TableHeaderGroup<
 export function processHeaderGroups<TTableColumnType>(
   headers: TableColumnType<TTableColumnType>[],
   headerGroups?: TableHeaderGroup<TTableColumnType>[]
-) {
-  const headerPropToIdxMap = getHeaderIdxMap(headers);
+):
+  | {
+      result: Record<string, string[]>;
+      deepestLevel: number;
+    }
+  | undefined {
+  if (!headerGroups) {
+    return undefined;
+  }
+
+  const headerToHeaderGroupMap: Record<string, string[]> = {};
+  const headerRowArray = getHeaderRowTitles(headerGroups);
+  let deepestLevel = 0;
+
+  for (const subArray of headerRowArray) {
+    const prop = subArray.pop()!;
+    headerToHeaderGroupMap[prop] = [
+      ...subArray,
+      headers.find((header) => header.prop === prop)?.title!
+    ];
+
+    if (headerToHeaderGroupMap[prop].length > deepestLevel) {
+      deepestLevel = headerToHeaderGroupMap[prop].length;
+    }
+  }
+
+  return { result: headerToHeaderGroupMap, deepestLevel };
 }
 
 // Helper functions.
-function getHeaderIdxMap(headers: TableColumnType<any>[]) {
-  const headerPropToIdxMap: Record<string, number> = {};
-  for (let i = 0; i < headers.length; i += 1) {
-    headerPropToIdxMap[headers[i].prop as string] = i;
-  }
-
-  return headerPropToIdxMap;
-}
-
-function getNestedHeaders(
-  headerPropToIdxMap: Record<string, number>,
-  headerGroups: TableHeaderGroup[],
-  deepestLevel = 0
-): {
-  nestedHeaders: string[];
-  deepestLevel: number;
-} {
-  //
-  const nestedHeaders: string[] = [];
-  let deepest = deepestLevel;
+function getHeaderRowTitles(
+  headerGroups: TableHeaderGroup<any>[],
+  parentHeaders: string[] = []
+): string[][] {
+  const array: string[][] = [];
+  const parent = [...parentHeaders];
 
   for (const headerGroup of headerGroups) {
-    for (const child of headerGroup.children) {
-      if (typeof child !== 'object') {
-        nestedHeaders.push(String(child));
-      } else {
-        const result = getNestedHeaders(
-          headerPropToIdxMap,
-          headerGroups,
-          deepest
-        );
-        nestedHeaders.push(...result.nestedHeaders);
+    parent.push(headerGroup.title);
 
-        if (result.deepestLevel > deepest) {
-          deepest = result.deepestLevel;
-        }
+    if (isChildrenHeaderGroup(headerGroup.children)) {
+      // Nested header.
+      const subArray = getHeaderRowTitles(headerGroup.children);
+      array.push(...subArray);
+    } else {
+      for (const prop of headerGroup.children) {
+        array.push([...parent, String(prop)]);
       }
     }
   }
 
-  return { nestedHeaders, deepestLevel: deepest };
+  return array;
+}
+
+function isChildrenHeaderGroup(
+  children: TableHeaderGroup<any>['children']
+): children is TableHeaderGroup<any>[] {
+  return typeof children[0] === 'object';
 }
