@@ -94,11 +94,11 @@ While this is not as simple as the previous one (only `Datatable`), this enables
 
 There are 5 parameters that we can pass to `DatatableWrapper` if we want to customize the initial states or want to tweak the underlying function.
 
-1. [`checkboxProps`](https://github.com/imballinst/react-bs-datatable/blob/main/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#checkboxprops)
-2. [`filterProps`](https://github.com/imballinst/react-bs-datatable/blob/main/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#checkboxprops)
-3. [`paginationOptionsProps`](https://github.com/imballinst/react-bs-datatable/blob/main/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#paginationoptionsprops)
-4. [`paginationProps`](https://github.com/imballinst/react-bs-datatable/blob/main/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#paginationprops)
-5. [`sortProps`](https://github.com/imballinst/react-bs-datatable/blob/main/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#sortprops)
+1. [`checkboxProps`](https://github.com/imballinst/react-bs-datatable/blob/14b03cefa652818a28b0c8d0ae3bbe965f243386/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#checkboxprops)
+2. [`filterProps`](https://github.com/imballinst/react-bs-datatable/blob/14b03cefa652818a28b0c8d0ae3bbe965f243386/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#checkboxprops)
+3. [`paginationOptionsProps`](https://github.com/imballinst/react-bs-datatable/blob/14b03cefa652818a28b0c8d0ae3bbe965f243386/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#paginationoptionsprops)
+4. [`paginationProps`](https://github.com/imballinst/react-bs-datatable/blob/14b03cefa652818a28b0c8d0ae3bbe965f243386/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#paginationprops)
+5. [`sortProps`](https://github.com/imballinst/react-bs-datatable/blob/14b03cefa652818a28b0c8d0ae3bbe965f243386/api/interfaces/components_DatatableWrapper.DatatableWrapperProps.md#sortprops)
 
 To declare an initial sort state and custom sort function, for example, we can do this:
 
@@ -125,7 +125,7 @@ There are 2 things that the snippet above does:
 1. Set the initial state of the table to sort the `name` prop in descending order.
 2. Converts the "value" of the date column from string to number. This is because, some formatted dates cannot be sorted correctly.
 
-The complete example can be seen in this [Storybook story example](https://github.com/imballinst/react-bs-datatable/blob/main/src/__stories__/00-Uncontrolled.stories.tsx#L241-L251).
+The complete example can be seen in this [Storybook story example](https://github.com/imballinst/react-bs-datatable/blob/14b03cefa652818a28b0c8d0ae3bbe965f243386/src/__stories__/00-Uncontrolled.stories.tsx#L241-L251).
 
 ### Controlling a controlled table
 
@@ -180,7 +180,7 @@ The `async` prop was removed as of v3. Moving forward, to control components of 
 </DatatableWrapper>
 ```
 
-The complete example can be seen in this [Storybook story component](https://github.com/imballinst/react-bs-datatable/blob/main/src/__stories__/01-Controlled.stories.tsx#L147-L180).
+The complete example can be seen in this [Storybook story component](https://github.com/imballinst/react-bs-datatable/blob/14b03cefa652818a28b0c8d0ae3bbe965f243386/src/__stories__/01-Controlled.stories.tsx#L147-L180).
 
 ### More composable table classes
 
