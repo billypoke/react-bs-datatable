@@ -24,9 +24,9 @@ import { TableHeaderGroups } from '../helpers/header-groups';
 export interface TableHeaderClasses {
   /** The class for the `thead` tag. */
   thead?: string;
-  /** The class for the `tr` tags inside `tbody`. */
+  /** The class for all `tr` tags inside `tbody`. */
   tr?: string;
-  /** The class for the `th` tags inside each `tr` tag. */
+  /** The class for all `th` tags inside each `tr` tag. */
   th?: string;
 }
 /**
@@ -85,13 +85,15 @@ export function TableHeader({ classes, headerGroups, controlledProps }: TableHea
   for (let i = 0; i < headers.length; i += 1) {
     const {
       isSortable,
-      prop: headerProp,
+      prop: rawProp,
       title,
       headerCell,
+      thProps: additionalThProps = {},
       checkbox,
       alignment
     } = headers[i];
-    const prop = headerProp.toString();
+    const prop = rawProp.toString();
+    const { className: headerPropsClassName, ...rest } = additionalThProps;
 
     const thClass = makeClasses({
       'thead-th': true,
@@ -103,13 +105,15 @@ export function TableHeader({ classes, headerGroups, controlledProps }: TableHea
       className: makeClasses(
         thClass,
         classes?.th,
+        headerPropsClassName,
         // Alignment.
         {
           'text-start': alignment?.horizontal === 'left',
           'text-center': alignment?.horizontal === 'center',
           'text-end': alignment?.horizontal === 'right'
         }
-      )
+      ),
+      ...rest
     };
     let sortIcon: 'sort' | 'sortUp' | 'sortDown' = 'sort';
     let sortIconRender = null;
