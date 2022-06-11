@@ -1,6 +1,6 @@
 import { sortData, filterData, paginateData } from './data';
 import { convertArrayToRecord } from './object';
-import { ColumnProcessObj, TableColumnType } from './types';
+import { ColumnProcessObj, TableColumnInfo } from './types';
 
 interface TestObject {
   prop1: number;
@@ -28,7 +28,7 @@ describe('data util (src/utils/data)', () => {
 
   it('should filter data correctly', () => {
     // Initialization
-    const headers: TableColumnType<TestObject>[] = [
+    const headers: TableColumnInfo<TestObject>[] = [
       { prop: 'prop1', isFilterable: true },
       { prop: 'prop2', isFilterable: false }
     ];

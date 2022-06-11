@@ -1,4 +1,4 @@
-import { TableColumnType } from '../../helpers/types';
+import { TableColumnInfo } from '../../helpers/types';
 import { StoryColumnType } from './types';
 
 export const STORY_PROP_TO_OPTION_NAME: Record<keyof StoryColumnType, string> =
@@ -12,7 +12,7 @@ export const STORY_PROP_TO_OPTION_NAME: Record<keyof StoryColumnType, string> =
     checkbox: ''
   };
 
-export const STORY_HEADERS: TableColumnType<StoryColumnType>[] = [
+export const STORY_HEADERS: TableColumnInfo<StoryColumnType>[] = [
   {
     prop: 'name',
     title: 'Name'

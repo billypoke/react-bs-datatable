@@ -23,7 +23,7 @@ import {
 import { Filter } from '../components/Filter';
 import { PaginationOptions } from '../components/PaginationOptions';
 import { Pagination } from '../components/Pagination';
-import { TableColumnType } from '../helpers/types';
+import { TableColumnInfo } from '../helpers/types';
 import { BulkCheckboxControl } from '../components/BulkCheckboxControl';
 
 export default {
@@ -154,7 +154,7 @@ CustomTableRowProps.args = {
 // instead of adding all to StoryTable props which can result in unmaintainability.
 export const CustomThProps = (() => {
   function CustomThPropsTemplate({ thClassName }: { thClassName?: string }) {
-    const headers: TableColumnType<StoryColumnType>[] = STORY_HEADERS.map(
+    const headers: TableColumnInfo<StoryColumnType>[] = STORY_HEADERS.map(
       (header) => ({
         ...header,
         thProps:
@@ -244,7 +244,7 @@ const ComposedTableRowTemplate: ComponentStory<typeof StoryTable> = ({
   rowsPerPageOptions = [5, 10, 15, 20],
   alwaysShowPagination
 }) => {
-  const headers: TableColumnType<StoryColumnType>[] = STORY_HEADERS.map(
+  const headers: TableColumnInfo<StoryColumnType>[] = STORY_HEADERS.map(
     (header) => ({
       ...header,
       isSortable: sortableFields?.includes(
@@ -453,7 +453,7 @@ function StoryTable({
   // Additional sort props.
   sortProps?: DatatableWrapperProps<StoryColumnType>['sortProps'];
 }) {
-  const headers: TableColumnType<StoryColumnType>[] = STORY_HEADERS.map(
+  const headers: TableColumnInfo<StoryColumnType>[] = STORY_HEADERS.map(
     (header) => ({
       ...header,
       isSortable: sortableFields?.includes(

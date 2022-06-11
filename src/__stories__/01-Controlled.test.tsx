@@ -12,7 +12,7 @@ import {
   CONTROLLED_HEADERS,
   fetchControlledMockData
 } from './resources/shared-controlled';
-import { TableColumnType } from '../helpers/types';
+import { TableColumnInfo } from '../helpers/types';
 
 // TODO(imballinst): probably better if we use MSW
 // instead of the `setTimeout` with `new Promise`.
@@ -27,7 +27,7 @@ test('Normal use case', async () => {
     <Async
       fetchFn={fetchControlledMockData}
       // Not sure why this is marked as `unknown`.
-      headers={CONTROLLED_HEADERS as TableColumnType<unknown>[]}
+      headers={CONTROLLED_HEADERS as TableColumnInfo<unknown>[]}
       rowsPerPage={8}
       rowsPerPageOptions={[8, 16, 24, 32]}
       rowOnClickFn={() => {}}

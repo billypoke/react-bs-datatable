@@ -17,7 +17,7 @@ import { DatatableWrapper } from '../components/DatatableWrapper';
 import { Filter } from '../components/Filter';
 import { PaginationOptions } from '../components/PaginationOptions';
 import { Pagination } from '../components/Pagination';
-import { SortType, TableColumnType } from '../helpers/types';
+import { SortType, TableColumnInfo } from '../helpers/types';
 
 export default {
   /* 👇 The title prop is optional.
@@ -46,7 +46,7 @@ interface PokemonBodyType {
   url: string;
 }
 
-const POKEMON_HEADERS: TableColumnType<PokemonBodyType>[] = [
+const POKEMON_HEADERS: TableColumnInfo<PokemonBodyType>[] = [
   {
     prop: 'name',
     title: 'Name'
@@ -217,7 +217,7 @@ function AsyncStoryTable<TTableRowType = any>({
   rowsPerPageOptions: rowsPerPageOptionsProp = DEFAULT_ROWS_PER_PAGE_OPTIONS
 }: {
   fetchFn: (params: FetchParams) => Promise<FetchResponse<TTableRowType>>;
-  headers?: TableColumnType<TTableRowType>[];
+  headers?: TableColumnInfo<TTableRowType>[];
   rowsPerPage?: number;
   rowsPerPageOptions?: number[];
   rowOnClickFn?: (name: string) => void;

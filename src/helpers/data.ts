@@ -1,7 +1,7 @@
 import {
   ColumnProcessObj,
   SortType,
-  TableColumnType,
+  TableColumnInfo,
   TableRowType
 } from './types';
 
@@ -49,7 +49,7 @@ export function sortData<TTableRowType extends TableRowType>(
  */
 export function filterData<TTableRowType extends TableRowType>(
   data: TTableRowType[],
-  headers: Record<string, TableColumnType<TTableRowType>>,
+  headers: Record<string, TableColumnInfo<TTableRowType>>,
   filterText: string
 ) {
   if (filterText === '') {

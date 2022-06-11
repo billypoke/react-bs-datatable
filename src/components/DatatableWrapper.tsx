@@ -27,7 +27,7 @@ import {
   SortType,
   TableRowType
 } from '../helpers/types';
-import { TableColumnType } from '../helpers/types';
+import { TableColumnInfo } from '../helpers/types';
 
 /**
  * This is the additional parameters for the filter function.
@@ -131,7 +131,7 @@ export interface UncontrolledTableEvents {
  */
 interface DatatableWrapperContextType<TTableRowType> {
   // Things passed to other components.
-  headers: TableColumnType<TTableRowType>[];
+  headers: TableColumnInfo<TTableRowType>[];
   // Filter.
   isFilterable: boolean;
   filterState: string;
@@ -174,7 +174,7 @@ export const useDatatableWrapper = useCtx;
 export interface DatatableWrapperProps<TTableRowType> {
   /** The rest of the table, including its controls. */
   children: ReactNode;
-  headers: TableColumnType<TTableRowType>[];
+  headers: TableColumnInfo<TTableRowType>[];
   body: TTableRowType[];
   /** When set to `true`, the table will "skip" all uncontrolled processes. */
   isControlled?: boolean;
@@ -518,11 +518,11 @@ function getDefaultDatatableState<TTableRowType = TableRowType>({
   };
 }
 
-function useTableHeaderCheckbox<TTableColumnType>({
+function useTableHeaderCheckbox<TTableColumnInfo>({
   headers,
   initialStates
 }: {
-  headers: TableColumnType<TTableColumnType>[];
+  headers: TableColumnInfo<TTableColumnInfo>[];
   initialStates?: Record<string, CheckboxState>;
 }) {
   const checkboxRefs = useRef<Record<string, HTMLInputElement>>({});

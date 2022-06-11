@@ -6,12 +6,12 @@ import { filterData, sortData } from '../../helpers/data';
 import { convertArrayToRecord } from '../../helpers/object';
 import { STORY_HEADERS, STORY_PROP_TO_OPTION_NAME } from './shared';
 import { FetchParams, FetchResponse, StoryColumnType } from './types';
-import { TableColumnType } from '../../helpers/types';
+import { TableColumnInfo } from '../../helpers/types';
 
 const SORTABLE_FIELDS = ['Name', 'Username', 'Last Update', 'Score'];
 const FILTERABLE_FIELDS = ['Name', 'Username', 'Location'];
 
-export const CONTROLLED_HEADERS: TableColumnType<StoryColumnType>[] =
+export const CONTROLLED_HEADERS: TableColumnInfo<StoryColumnType>[] =
   STORY_HEADERS.map((header) => ({
     ...header,
     isSortable: SORTABLE_FIELDS.includes(
