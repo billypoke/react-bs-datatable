@@ -3,7 +3,10 @@ import { TableColumn, TableColumnInfo, TableGroup } from './types';
 export function getColumnSizesPerRow<TTableColumnInfo>(
   headers: TableColumn<TTableColumnInfo>[],
   currentLevel = 1
-): number[][] {
+): {
+  numberOfColumns: number;
+  numberOfRows: number;
+} {
   // Check if it's header group.
   const headerWithGroupings: TableGroup[] = [];
   const headerColumns: TableColumnInfo[] = [];
@@ -18,7 +21,7 @@ export function getColumnSizesPerRow<TTableColumnInfo>(
 
   if (headerWithGroupings.length === 0) {
     return {
-      columnSizesPerRow: new Array(headers.length).fill(1),
+      numberOfColumns: headers.length,
       numberOfRows: currentLevel
     };
   }
@@ -40,14 +43,36 @@ export function getColumnSizesPerRow<TTableColumnInfo>(
   };
 }
 
-export function getTableHeaderGridStructure(
-  headers: TableColumn[],
-  numberInfo: {
+/**
+ * @internal
+ *
+ * This table:
+ *
+ * | Number | ID |    Name                 |
+ * |        |    |  First name | Last name |
+ * | ------ | -- | ----------------------- |
+ *
+ * is represented by:
+ *
+ * [1, 1, 2]
+ * [null, null, 1, 1]
+ */
+export function getColumnSizes(
+  headers: TableColumn<any>[],
+  gridInfo: {
     numberOfColumns: number;
     numberOfRows: number;
   }
-): (TableColumn | null)[][] {
-  const grid: (TableColumn | null)[][] = [];
+): (number | null)[][] {
+  const result: (number | null)[][] = [];
 
-  return grid;
+  for (let i = 0; i < headers.length; i++) {
+    const header = headers[i];
+
+    if (header.type === 'group') {
+    } else {
+    }
+  }
+
+  return result;
 }
