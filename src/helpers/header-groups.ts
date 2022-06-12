@@ -64,24 +64,42 @@ export function getColumnSizes(
     numberOfRows: number;
   }
 ): (number | null)[][] {
-  const result: (number | null)[][] = [];
-
-  for (let i = 0; i < headers.length; i++) {
-    const header = headers[i];
-
-    if (header.type === 'group') {
-    } else {
-    }
-  }
-
+  const result = headers.map((header) =>
+    getColumnSize(header, gridInfo.numberOfRows)
+  );
   return result;
 }
 
 // Helper functions.
 // The array is the column size for a prop. For example, `[1, null, null]` means
 // the column size is 1 and it has `rowSpan={3}`.
-function getColumnSize(header: TableColumn<any>): (number | null)[] {
+function getColumnSize(
+  header: TableColumn<any>,
+  maxNumberOfRows: number,
+  currentRow = 1
+): (number | null)[] {
   const result: (number | null)[] = [];
+
+  if (header.type === 'group') {
+    for (const child of header.headerChildren) {
+      const columnSizes = getColumnSize(child, maxNumberOfRows, currentRow + 1);
+
+      for (let i = 0; i < columnSizes.length; i += 1) {
+        if (columnSizes[i] === null) {
+          result[i] = null;
+        } else {
+          result[i] = (result[i] || 0) + (columnSizes[i] as number);
+        }
+      }
+    }
+  } else {
+    result[0] = 1;
+
+    const diff = maxNumberOfRows - currentRow;
+    for (let i = 1; i <= diff; i += 1) {
+      result[i] = null;
+    }
+  }
 
   return result;
 }

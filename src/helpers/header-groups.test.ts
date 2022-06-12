@@ -1,4 +1,4 @@
-import { getNumberOfHeaderColumnsAndRows } from './header-groups';
+import { getColumnSizes, getColumnSizesPerRow } from './header-groups';
 import { TableColumn } from './types';
 
 interface Values {
@@ -128,29 +128,49 @@ const TABLE_HEADERS_3_LEVELS_ASYMMETRIC: TableColumn<Values>[] = [
   }
 ];
 
-describe('getNumberOfHeaderColumnsAndRows', () => {
+describe('getColumnSizesPerRow', () => {
   test('1 level', () => {
-    expect(
-      getNumberOfHeaderColumnsAndRows(TABLE_HEADERS_WITHOUT_CHILDREN)
-    ).toEqual({
+    expect(getColumnSizesPerRow(TABLE_HEADERS_WITHOUT_CHILDREN)).toEqual({
       numberOfColumns: 5,
       numberOfRows: 1
     });
   });
 
   test('2 level', () => {
-    expect(getNumberOfHeaderColumnsAndRows(TABLE_HEADERS_2_LEVELS)).toEqual({
+    expect(getColumnSizesPerRow(TABLE_HEADERS_2_LEVELS)).toEqual({
       numberOfColumns: 5,
       numberOfRows: 2
     });
   });
 
   test('3 level, asymmetric', () => {
-    expect(
-      getNumberOfHeaderColumnsAndRows(TABLE_HEADERS_3_LEVELS_ASYMMETRIC)
-    ).toEqual({
+    expect(getColumnSizesPerRow(TABLE_HEADERS_3_LEVELS_ASYMMETRIC)).toEqual({
       numberOfColumns: 9,
       numberOfRows: 3
     });
+  });
+});
+
+describe('getColumnSizes', () => {
+  // test('1 level', () => {
+  //   const sizes = getColumnSizesPerRow(TABLE_HEADERS_WITHOUT_CHILDREN);
+  //   expect(getColumnSizes(TABLE_HEADERS_WITHOUT_CHILDREN, sizes)).toEqual([
+  //     [1],
+  //     [1],
+  //     [1],
+  //     [1],
+  //     [1]
+  //   ]);
+  // });
+
+  test('2 level', () => {
+    const sizes = getColumnSizesPerRow(TABLE_HEADERS_2_LEVELS);
+    expect(getColumnSizes(TABLE_HEADERS_2_LEVELS, sizes)).toEqual([
+      [1],
+      [1],
+      [1],
+      [1],
+      [1]
+    ]);
   });
 });
