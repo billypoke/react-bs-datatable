@@ -76,3 +76,12 @@ export function getColumnSizes(
 
   return result;
 }
+
+// Helper functions.
+// The array is the column size for a prop. For example, `[1, null, null]` means
+// the column size is 1 and it has `rowSpan={3}`.
+function getColumnSize(header: TableColumn<any>): (number | null)[] {
+  const result: (number | null)[] = [];
+
+  return result;
+}
