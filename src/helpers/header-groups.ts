@@ -1,12 +1,14 @@
 import { TableColumn, TableColumnInfo, TableGroup } from './types';
 
+interface GridInfo {
+  numberOfColumns: number;
+  numberOfRows: number;
+}
+
 export function getColumnSizesPerRow<TTableColumnInfo>(
   headers: TableColumn<TTableColumnInfo>[],
   currentLevel = 1
-): {
-  numberOfColumns: number;
-  numberOfRows: number;
-} {
+): GridInfo {
   // Check if it's header group.
   const headerWithGroupings: TableGroup[] = [];
   const headerColumns: TableColumnInfo[] = [];
@@ -59,10 +61,7 @@ export function getColumnSizesPerRow<TTableColumnInfo>(
  */
 export function getColumnSizes(
   headers: TableColumn<any>[],
-  gridInfo: {
-    numberOfColumns: number;
-    numberOfRows: number;
-  }
+  gridInfo: GridInfo
 ): (number | null)[][] {
   const result = headers.map((header) =>
     getColumnSize(header, gridInfo.numberOfRows)
@@ -73,32 +72,28 @@ export function getColumnSizes(
 // Helper functions.
 // The array is the column size for a prop. For example, `[1, null, null]` means
 // the column size is 1 and it has `rowSpan={3}`.
+interface SpanInfo {
+  rowSpan: number;
+  colSpan: number;
+}
+
 function getColumnSize(
   header: TableColumn<any>,
-  maxNumberOfRows: number,
-  currentRow = 1
-): (number | null)[] {
-  const result: (number | null)[] = [];
+  gridInfo: GridInfo,
+  currentRow = 0
+): SpanInfo[] {
+  const result: SpanInfo[] = [];
 
   if (header.type === 'group') {
     for (const child of header.headerChildren) {
-      const columnSizes = getColumnSize(child, maxNumberOfRows, currentRow + 1);
-
-      for (let i = 0; i < columnSizes.length; i += 1) {
-        if (columnSizes[i] === null) {
-          result[i] = null;
-        } else {
-          result[i] = (result[i] || 0) + (columnSizes[i] as number);
-        }
-      }
+      const columnSizes = getColumnSize(child, numberOfRows, currentRow + 1);
+      const totalSpan: SpanInfo = { colSpan: 0, rowSpan: 0 };
     }
   } else {
-    result[0] = 1;
-
-    const diff = maxNumberOfRows - currentRow;
-    for (let i = 1; i <= diff; i += 1) {
-      result[i] = null;
-    }
+    result[0] = {
+      colSpan: 1,
+      rowSpan: numberOfRows - currentRow
+    };
   }
 
   return result;

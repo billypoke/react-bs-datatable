@@ -166,7 +166,7 @@ describe('getColumnSizes', () => {
   test('2 level', () => {
     const sizes = getColumnSizesPerRow(TABLE_HEADERS_2_LEVELS);
     expect(getColumnSizes(TABLE_HEADERS_2_LEVELS, sizes)).toEqual([
-      [1],
+      [1, null],
       [1],
       [1],
       [1],
